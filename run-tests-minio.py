@@ -137,7 +137,7 @@ def unicodise(string):
 
     return unicode(string, "UTF-8", "replace")
 
-def deunicodise(string):
+def dUSnicodise(string):
     if type(string) != unicode:
         return string
 
@@ -355,9 +355,9 @@ test_s3cmd("Verify no test buckets", ['ls'],
            must_not_find = [pbucket(1), pbucket(2), pbucket(3)])
 
 
-## ====== Create one bucket (EU)
+## ====== Create one bucket (US)
 # Disabled for minio
-#test_s3cmd("Create one bucket (EU)", ['mb', '--bucket-location=EU', pbucket(1)],
+#test_s3cmd("Create one bucket (US)", ['mb', '--bucket-location=US', pbucket(1)],
 #    must_find = "Bucket '%s/' created" % pbucket(1))
 test_s3cmd("Create one bucket", ['mb', pbucket(1)],
     must_find = "Bucket '%s/' created" % pbucket(1))
@@ -370,15 +370,15 @@ test_s3cmd("Create multiple buckets", ['mb', pbucket(2), pbucket(3)],
 
 
 ## ====== Invalid bucket name
-test_s3cmd("Invalid bucket name", ["mb", "--bucket-location=EU", pbucket('EU')],
+test_s3cmd("Invalid bucket name", ["mb", "--bucket-location=US", pbucket('US')],
     retcode = EX_USAGE,
-    must_find = "ERROR: Parameter problem: Bucket name '%s' contains disallowed character" % bucket('EU'),
+    must_find = "ERROR: Parameter problem: Bucket name '%s' contains disallowed character" % bucket('US'),
     must_not_find_re = "Bucket.*created")
 
 
 ## ====== Buckets list
 test_s3cmd("Buckets list", ["ls"],
-    must_find = [ pbucket(1), pbucket(2), pbucket(3) ], must_not_find_re = pbucket('EU'))
+    must_find = [ pbucket(1), pbucket(2), pbucket(3) ], must_not_find_re = pbucket('US'))
 
 ## ====== Directory for cache
 test_flushdir("Create cache dir", "testsuite/cachetest")
